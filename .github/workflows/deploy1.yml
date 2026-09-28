@@ -1,0 +1,48 @@
+resources:
+  jobs:
+    ingest_process_pipeline:
+      name: ingest-process-pipeline
+      tasks:
+        - task_key: Ingest-data
+          notebook_task:
+            notebook_path: "/Workspace/Users/info@cypherpooltechnologies.com/Vishala -
+              folder/Excercises/Bronze: data_ingestion"
+            source: WORKSPACE
+        - task_key: Silver-1_Data_Cleansing
+          depends_on:
+            - task_key: Ingest-data
+          notebook_task:
+            notebook_path: "/Workspace/Users/info@cypherpooltechnologies.com/Vishala -
+              folder/Excercises/Silver-1 : Data Cleansing"
+            source: WORKSPACE
+        - task_key: Silver-2_Add_Derived_Columns
+          depends_on:
+            - task_key: Silver-1_Data_Cleansing
+          notebook_task:
+            notebook_path: "/Workspace/Users/info@cypherpooltechnologies.com/Vishala -
+              folder/Excercises/Silver-2 : Add Derived Columns"
+            source: WORKSPACE
+        - task_key: Silver-3_Filter_Data
+          depends_on:
+            - task_key: Silver-2_Add_Derived_Columns
+          notebook_task:
+            notebook_path: "/Workspace/Users/info@cypherpooltechnologies.com/Vishala -
+              folder/Excercises/Silver-3 : Filter Data"
+            source: WORKSPACE
+        - task_key: Silver-4_Append_New_Records
+          depends_on:
+            - task_key: Silver-3_Filter_Data
+          notebook_task:
+            notebook_path: "/Workspace/Users/info@cypherpooltechnologies.com/Vishala -
+              folder/Excercises/Silver-4 : Append New Records"
+            source: WORKSPACE
+        - task_key: Gold_Task_Business_Aggregation
+          depends_on:
+            - task_key: Silver-4_Append_New_Records
+          notebook_task:
+            notebook_path: "/Workspace/Users/info@cypherpooltechnologies.com/Vishala -
+              folder/Excercises/Gold Task : Business Aggregation"
+            source: WORKSPACE
+      queue:
+        enabled: true
+      performance_target: PERFORMANCE_OPTIMIZED
