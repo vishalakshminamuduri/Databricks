@@ -1,3 +1,6 @@
+bundle:
+  name: ingest-process-pipeline
+
 resources:
   jobs:
     ingest_process_pipeline:
